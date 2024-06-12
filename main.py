@@ -111,17 +111,13 @@ def GAP(st_ori, st_target, sc_ori, st_embed_uce2, sc_embed_uce2, st_embed_uce, s
 
          
 if __name__ == '__main__':
-    #               1    2   3    4     5    6    7   8    9  10   11    12   13   14   15   16
     shared_genes = [246, 33, 42, 1000, 915, 251, 118, 84, 76, 42, 347, 1000, 154, 981, 141, 118]  
-    # datasetall = [[index, value] for index, value in enumerate(shared_genes)]
-    
-    
+    datasetall = [[index, value] for index, value in enumerate(shared_genes)]
+
     for index, num in datasetall:
-        parser = argparse.ArgumentParser(description='Gene Alignment Projection Model')
-        # parser.add_argument('--dataset_num', default=index+1, type=int, help='the number of the datasets')
-        parser.add_argument('--dataset_num', default=index, type=int, help='the number of the datasets')
+        parser = argparse.ArgumentParser(description='single-cell Gene Alignment Projection Model')
+        parser.add_argument('--dataset_num', default=index+1, type=int, help='the number of the datasets')
         parser.add_argument('--test_gene_num', default=num, type=int, help='the number of target genes')
-        # parser.add_argument('--test_gene_num', default=2, type=int, help='the number of target genes')
         parser.add_argument('--latent_dim', default=512, type=int, help='latent alignment dimention')
         parser.add_argument('--encode_dim', default=4, type=int, help='encode dimention')
         parser.add_argument('--dir', default='./output_embed4+33/', type=str, help='working folder where all files will be saved.')
