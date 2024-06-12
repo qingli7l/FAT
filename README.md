@@ -1,1 +1,1 @@
-# GAP
+# scGAP
