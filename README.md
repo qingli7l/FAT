@@ -3,5 +3,5 @@ FAT is proposed as a conformable alignment and projection high throughput transc
 
 # Installation
 The requirements of FAT can be installed by:  
-`pip install -r requirements.txt`  
+`pip install -r requirements.yml`  
 then use `pip install -e .` or directly import the code.
