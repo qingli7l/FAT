@@ -4,3 +4,6 @@ FAT is proposed as a conformable alignment and projection high throughput transc
 # Installation
 The requirements of FAT can be installed by:  
 `conda env create -f requirements.yml`.
+
+# Tutorials
+FAT provides some tutorials about the imputation and evaluation. 
