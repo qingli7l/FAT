@@ -1,8 +1,8 @@
 # Alignment and Projection of scRNA-seq and Spatial Transcriptomics in Whole Transcriptome Space
 FAT is proposed as a conformable alignment and projection high throughput transcript gene expression prediction method. It deciphers both shared and whole space single-cell spatial data alignment and projection across species, paired/unpaired datasets, and sample conditions. 
 
-![FAT](https://drive.google.com/file/d/1uvvBUZDZ6qQ_14BK0JvoqykIJd18Su9Y/view?usp=sharing)
-![Uploading FAT_illustration_total.jpg…]()
+![FAT workflow](https://github.com/qingli7/FAT/blob/main/FAT_workflow.jpg?raw=true)
+
 
 # Installation
 The requirements of FAT can be installed by:  
