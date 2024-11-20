@@ -93,7 +93,7 @@ if __name__ == '__main__':
     DATASET = 'Liver'
     # DATASET = 'Lung'
 
-    direction='./human_data/'
+    direction='./src/human_data/'
     if DATASET == 'Lung':
         query_dataset = os.path.join(direction,'HumanLungCancerPatient2_filtered_ensg.h5ad')
         ref_dataset = os.path.join(direction,'GSE131907_Lung_ensg.h5ad')
