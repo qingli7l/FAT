@@ -174,15 +174,6 @@ class OmicsFormer(nn.Module):
         x_dict['h'] = self.pre_latent_norm(x_dict)
         x_dict['h'], latent_loss = self.latent(x_dict)
 
-
-        '''
-        x_dict.keys(): ['coord', 'x_seq', 'gene_mask', 'masked_x_seq', 'input_mask', 'input_gene_mask', 'h', 'base0', 'base1']
-        x_dict['h']: [206, 512]
-        x_dict['base0'] x_dict['base1']: [206, 1024]
-        
-        x_dict['x_seq'] x_dict['masked_x_seq'] x_dict['input_mask'] (0 1): [206, 407]
-        x_dict['gene_mask'](True False) x_dict['input_gene_mask']:  [407]
-        '''
         batch_size = x_dict['h'].shape[0] ####
         if batch_size!=0:
             # data prepare
