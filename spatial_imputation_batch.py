@@ -27,7 +27,6 @@ def mmd_loss(x, y):
     mi = torch.mean(torch.log(p_joint / (p_x.unsqueeze(0) * p_y.unsqueeze(0)))) 
     return mi
 
-
 def FAT(st_train, sc_train, st_test, sc_test, args):
 
     Y_train = sc_test
