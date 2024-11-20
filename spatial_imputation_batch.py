@@ -207,7 +207,6 @@ if __name__ == '__main__':
         f.write('MSE_data_'+ str(DATASET)  + '\n'+ str(MSE.values) + '\n\n\n\n')
         f.write('COS_data_'+ str(DATASET)  + '\n'+ str(COS.values) + '\n\n\n\n')
         
-        
         f.write('Average_Spearman_data_'+ str(DATASET)  + '\n'+ str(np.mean(Correlations.values)) + '\n\n')
         f.write('Average_PCC_data_'+ str(DATASET)  + '\n'+ str(np.mean(PCC.values)) + '\n\n')
         f.write('Average_SSIM_data_'+ str(DATASET)  + '\n'+ str(np.mean(SSIM.values)) + '\n\n')
