@@ -9,7 +9,7 @@ The requirements of FAT can be installed by:
 `pip install -r requirements.txt`
 
 # Useage
-FAT provides some tasks related to spatial imputation and projection. 
+FAT (<u>F</u>oundation Model Large Space Augmented Whole Transcriptome Spatial Gene Imputation) provides some tasks related to spatial imputation and projection. 
 Run `spatial_projection.py` for the spatial projection demo on [mouse datasets](https://www.nature.com/articles/s41592-022-01480-9). You can replace the datasets with other data divided into train and test datasets.
 
 Spatial imputation can run `spatial_imputation.py` for human datasets [Liver](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf) and [Lung](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf). If you want to experiment with other data, you can choose other pre-trained foundation models on the data to replace CellPLM adopted in FAT. The environment installation of spatial imputation is consistent with the environment of the selected foundation model.
