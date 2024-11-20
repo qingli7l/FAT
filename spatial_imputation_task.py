@@ -1,37 +1,27 @@
 import argparse
 import anndata as ad
-import scanpy as sc
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 from scipy.stats import entropy
-import matplotlib.pyplot as plt
-import warnings
-from sklearn.preprocessing import scale
-warnings.filterwarnings('ignore')
 from sklearn.preprocessing import MinMaxScaler
-import copy
 import torch
 import os
+import hdf5plugin
 from tqdm import tqdm
 from model_fat import *
 from dataset import *
-import pdb
 import torch.nn.functional as F
-import seaborn as sns
 from skimage.metrics import structural_similarity as ssim
-from matplotlib.font_manager import FontProperties
-# from tensorboardX import SummaryWriter
 import pickle
-import hdf5plugin
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from scipy.spatial.distance import cosine
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
 def mmd_loss(x, y):
-    x = F.softmax(x)
-    y = F.softmax(y)
+    x = F.softmax(x, dim=1)
+    y = F.softmax(y, dim=1)
     p_joint = torch.exp(-torch.norm(x - y, dim=1))
     p_x = torch.mean(p_joint, dim=0)
     p_y = torch.mean(p_joint, dim=0) 
@@ -64,6 +54,7 @@ def FAT(st_train, sc_train, st_test, sc_test, args):
     model  = DicModel(ori_dim=sc_ori_scaled.shape[1],sc_input=sc_input, st_input=st_input, latent_dim=args.latent_dim).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.wd) 
 
+    # for epoch in tqdm(range(args.epoch)): 
     for epoch in range(args.epoch): 
         x_enc, y_enc, x_dic, y_dic, cell2voxel, W, D = model(sc_input, st_input)
         
@@ -72,7 +63,8 @@ def FAT(st_train, sc_train, st_test, sc_test, args):
         l_proj = -F.cosine_similarity(cell2voxel, y_dic, dim=0).mean() \
             -F.cosine_similarity(torch.matmul(W, sc_input[:,:st_ori_scaled.shape[1]]), st_input[:,:st_ori_scaled.shape[1]], dim=0).mean()\
 
-        loss =   args.proj * l_proj  + l_align  #+ l_D  
+        
+        loss =   args.proj * l_proj  + l_align 
         
         optimizer.zero_grad()
         loss.backward()
@@ -85,15 +77,16 @@ def FAT(st_train, sc_train, st_test, sc_test, args):
     Dic = D
 
     return Imp_Genes, Dic  
+  
+    
 
-
-
+         
 if __name__ == '__main__':
-    # data prepare
     DATASET = 'Liver'
     # DATASET = 'Lung'
 
-    direction='./src/human_data/'
+    # data prepare
+    direction='src/human_data/'
     if DATASET == 'Lung':
         query_dataset = os.path.join(direction,'HumanLungCancerPatient2_filtered_ensg.h5ad')
         ref_dataset = os.path.join(direction,'GSE131907_Lung_ensg.h5ad')
@@ -106,16 +99,17 @@ if __name__ == '__main__':
         sc_ori = ad.read_h5ad(ref_dataset)
     print('original sc shape: ',sc_ori.X.shape, 'st shape: ',st_ori.X.shape)
     
-    sc_ori.obs['Genes_count'] = np.sum(sc_ori.X > 0, axis=1)
+    # data filter
+    sc_ori.obs['Genes_count'] = np.sum(sc_ori.X > 0, axis=1) 
     sc_ori = sc_ori[sc_ori.obs['Genes_count'] >=10] 
     st_ori.obs['Genes_count'] = np.sum(st_ori.X > 0, axis=1) 
     st_ori = st_ori[st_ori.obs['Genes_count'] >=10] 
     print('filtered sc shape: ',sc_ori.X.shape, 'st shape: ',st_ori.X.shape)
     
-    # target genes
-    shared_gene = np.intersect1d(sc_ori.var_names,st_ori.var_names) 
+    shared_gene = np.intersect1d(sc_ori.var_names,st_ori.var_names)
     sc_ori = sc_ori[:105,shared_gene]
     st_ori = st_ori[:105,shared_gene]
+    
     target_genes = stratified_sample_genes_by_sparsity(st_ori, seed=11)
     
     num = len(target_genes)
@@ -124,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument('--test_gene_num', default=num, type=int, help='the number of target genes')
     parser.add_argument('--latent_dim', default=20+num, type=int, help='latent alignment dimention')
     parser.add_argument('--encode_dim', default=10, type=int, help='encode dimention')
-    parser.add_argument('--dir', default='./output_liver_fat/', type=str, help='working folder where all files will be saved.')
+    parser.add_argument('--dir', default='./output/', type=str, help='working folder where all files will be saved.')
     
     parser.add_argument('--proj', default=1, type=int, help='impute weight')
     parser.add_argument('--norm', default=1, type=int, help='impute weight')
@@ -146,9 +140,9 @@ if __name__ == '__main__':
     COS = pd.Series(index = target_genes) 
     All_Imp_Genes = pd.DataFrame(np.zeros((st_ori.shape[0], args.test_gene_num)),columns=target_genes)
     Dic_data =  pd.DataFrame({'column': [np.zeros((sc_ori.shape[0], st_ori.shape[0])) for _ in target_genes]}, index=target_genes)
-    # pdb.set_trace()
     scaler = MinMaxScaler(feature_range=(0, 1))
     
+    # training process
     for i in tqdm(target_genes):
         Imp_Genes, Dic  = FAT(st_ori[:, ~st_ori.var_names.isin([i])], sc_ori[:, ~st_ori.var_names.isin([i])],
                         st_ori[:, st_ori.var_names.isin([i])], sc_ori[:, st_ori.var_names.isin([i])], args)
@@ -183,8 +177,7 @@ if __name__ == '__main__':
     print('MAE: ', MAE.values)
     print('MSE: ', MSE.values)
     print('COS: ', COS.values)
-    # path = os.path.join(args.dir, 'fat_data_{}_gene_{}_ldim_{}.txt'.format(DATASET, args.test_gene_num, args.latent_dim))
-    path = os.path.join(args.dir, 'fat_data_{}_gene_{}_ldim_{}_batch_{}.txt'.format(DATASET, args.test_gene_num, args.latent_dim, batch_num))
+    path = os.path.join(args.dir, 'fat_data_{}_gene_{}_ldim_{}.txt'.format(DATASET, args.test_gene_num, args.latent_dim))
     with open(path, 'w') as f:
         for item in Correlations.index:
             f.write(str(item) + '\n')
@@ -214,8 +207,9 @@ if __name__ == '__main__':
     # draw results
     gene_num = [0]
     for i in gene_num:
-        draw_data_batch(target_genes[i], sc_ori, st_ori, All_Imp_Genes, DATASET, args)\
+        draw_data_batch(target_genes[i], sc_ori, st_ori, All_Imp_Genes, DATASET, args)
 
 
 # conda activate fat      
-# CUDA_VISIBLE_DEVICES='0' python main.py
+# CUDA_VISIBLE_DEVICES='0' python spatial_imputation_task.py
+
