@@ -124,7 +124,7 @@ if __name__ == '__main__':
     imput_gene = shared_gene[2]
     target_genes.append(imput_gene)
     num = len(target_genes)
-    parser = argparse.ArgumentParser(description='Gene Alignment Projection Model')
+    parser = argparse.ArgumentParser(description='FAT Model')
     parser.add_argument('--dataset_num', default=DATASET, type=str, help='the number of target genes')
     parser.add_argument('--test_gene_num', default=num, type=int, help='the number of target genes')
     parser.add_argument('--latent_dim', default=20+num, type=int, help='latent alignment dimention')
