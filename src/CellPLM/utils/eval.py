@@ -135,11 +135,7 @@ def imputation_eval(pred_labels, true_labels, dim=1):
     ssim_ = []
     js = []
     pcc = []
-    
-    # if ((true_labels - true_labels.int().float())<1e-6).all():
-    #     print('Lognorm')
-    #     true_labels = torch.log1p(true_labels)
-    #     pred_labels = torch.log1p(pred_labels)
+
     for i in range(true_labels.shape[dim]):
         true_vec = true_labels[i] if dim == 0 else true_labels[:, i]
         pred_vec = F.relu(pred_labels[i]) if dim == 0 else F.relu(pred_labels[:, i])
@@ -148,12 +144,9 @@ def imputation_eval(pred_labels, true_labels, dim=1):
         pred_nz = pred_vec#[nz_idx]
         mse.append(F.mse_loss(pred_nz, true_nz).item())
         rmse.append(np.sqrt(mse))
-                      
-        # rmsle.append(np.sqrt(F.mse_loss(torch.log(pred_nz + 1), torch.log(true_nz + 1)).item()))
         mae.append(F.l1_loss(pred_nz, true_nz).item())
         corr.append(PearsonCorr1d(pred_nz, true_nz).item())
         cos.append(F.cosine_similarity(pred_nz, true_nz, dim=0).item())
-        
         
         ####
         true_nz = true_nz.cpu().numpy()
@@ -171,7 +164,6 @@ def imputation_eval(pred_labels, true_labels, dim=1):
     return {
         'mse': sum(mse) / len(mse),
         'rmse': sum(rmse) / len(rmse),
-        # 'rmsle': sum(rmsle) / len(rmsle),
         'mae': sum(mae) / len(mae),
         'corr': sum(corr) / len(corr),
         'cos': sum(cos) / len(cos),
