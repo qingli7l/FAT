@@ -14,4 +14,4 @@ Run `spatial_projection.py` for the spatial projection demo on [mouse datasets](
 
 Spatial imputation with foundation model adopt CellPLM in FAT can run `spatial_imputation.py` for human datasets [liver](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf) and [lung](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf). If you want to experiment with other data, you can choose other pre-trained foundation models to replace CellPLM.
 
-Batch effect demo uses human brain cell dataset [Zhuang](https://alleninstitute.github.io/abc_atlas_access/descriptions/Zhuang-ABCA-1.html) and can be run by `spatial_batch_effect.py`.
+Batch effect demo uses [human](https://alleninstitute.github.io/abc_atlas_access/descriptions/Zhuang-ABCA-1.html) brain cell dataset and can be run by `spatial_batch_effect.py`.
