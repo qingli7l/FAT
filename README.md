@@ -10,7 +10,7 @@ The requirements of FAT can be installed by:
 
 # Useage
 FAT provides some tasks about spatial imputation and projection. 
-Run 'spatial_projection.py' for the spatial projection demo on mouse datasets. You can replace the datasets with other data divided into train and test datasets.
+Run `spatial_projection.py` for the spatial projection demo on mouse datasets. You can replace the datasets with other data divided into train and test datasets.
 
-Spatial imputation with foundation model adopt CellPLM in FAT can run 'spatial_imputation.py' for human datasets liver and lung. If you want to experiment with other data, you can choose other pre-trained foundation models to replace CellPLM.
+Spatial imputation with foundation model adopt CellPLM in FAT can run `spatial_imputation.py` for human datasets liver and lung. If you want to experiment with other data, you can choose other pre-trained foundation models to replace CellPLM.
 
