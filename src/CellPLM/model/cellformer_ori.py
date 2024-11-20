@@ -27,9 +27,8 @@ class FATLoss(nn.Module):
         loss = (1 / (n * (n - 1))) * torch.sum(xx - torch.diag(xx)) + \
                (1 / (m * (m - 1))) * torch.sum(yy - torch.diag(yy)) - \
                (2 / (n * m)) * torch.sum(xy)
-        
+
         return torch.tanh(loss)
-        # return loss
 
     def forward(self, x, enc, dic, cell2voxel, W):
 
