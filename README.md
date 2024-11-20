@@ -6,7 +6,10 @@ FAT (Foundation Model Large Space Augmented Whole Transcriptome Spatial Gene Imp
 
 # Installation
 The requirements of FAT can be installed by:  
-`pip install -r requirements.txt`
+`
+conda create -n fat python=3.9 -y 
+pip install -r requirements.txt
+`
 
 # Useage
 FAT provides some tasks related to spatial imputation and projection. 
