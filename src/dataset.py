@@ -25,23 +25,23 @@ def stratified_sample_genes_by_sparsity(data, boundaries=None, seed=10):
 
 def datasets_82(dataset_num=2, part=0): 
 
-    sc_ori_8 = sc.read_h5ad("src/mouse_data/dataset_split/dataset{}_seq_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
-    st_ori_8 = sc.read_h5ad("src/mouse_data/dataset_split/dataset{}_spatial_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    sc_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    st_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
     
-    sc_ori_2 = sc.read_h5ad("src/mouse_data/dataset_split/dataset{}_seq_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
-    st_ori_2 = sc.read_h5ad("src/mouse_data/dataset_split/dataset{}_spatial_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    sc_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    st_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
     
     return st_ori_8, sc_ori_8, st_ori_2, sc_ori_2
 
 
-# class XDict(dict):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self._num = self[list(self.keys())[0]].shape[0]
+class XDict(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._num = self[list(self.keys())[0]].shape[0]
 
-#     def size(self):
-#         warnings.warn("Deprecated function: Xdict.size().", DeprecationWarning)
-#         return self._num
+    def size(self):
+        warnings.warn("Deprecated function: Xdict.size().", DeprecationWarning)
+        return self._num
 
 
 def dataset_cellplm(DATASET='Liver'):
