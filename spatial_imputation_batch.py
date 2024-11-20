@@ -8,8 +8,8 @@ from sklearn.preprocessing import MinMaxScaler
 import torch
 import os
 from tqdm import tqdm
-from model_fat import *
-from dataset import *
+from src.model_fat import *
+from src.dataset import *
 import torch.nn.functional as F
 from skimage.metrics import structural_similarity as ssim
 import pickle
