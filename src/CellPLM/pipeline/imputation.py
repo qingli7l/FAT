@@ -18,8 +18,6 @@ import scipy.sparse
 import pdb
 
 def mmd_loss(x, y, sigma=0.1):
-    # 计算源域和目标域的MMD距离
-    # 假设 x 和 y 是特征向量
     n = x.size(0)
     m = y.size(0)
     xx = torch.mm(x, x.t())
@@ -71,16 +69,13 @@ def inference(model, dataloader, split, device, batch_size, order_required=False
                 input_dict = {}
                 for k in data_dict:
                     if k == 'x_seq':
-                        input_dict[k] = data_dict[k].index_select(0, cur).to(device) # 选择当前批次的数据
+                        input_dict[k] = data_dict[k].index_select(0, cur).to(device)
                     elif k == 'gene_mask':
-                        input_dict[k] = data_dict[k].to(device) # 整个数据，不需要按批次切分
+                        input_dict[k] = data_dict[k].to(device) 
                     elif k not in ['gene_list', 'split']:
-                        input_dict[k] = data_dict[k][cur].to(device) # 选择当前批次的数据
+                        input_dict[k] = data_dict[k][cur].to(device) 
                 x_dict = XDict(input_dict)
                 out_dict, loss = model(x_dict, data_dict['gene_list'])
-                '''
-                out_dict.keys(): dict_keys(['mean', 'disp', 'recon', 'latent', 'pred', 'latent_loss', 'target_loss'])
-                '''
                 epoch_loss.append(loss.item())
                 pred.append(out_dict['pred'])
                 if order_required:
@@ -156,20 +151,12 @@ class ImputationPipeline(Pipeline):
                 for k in input_dict:
                     input_dict[k] = input_dict[k].to(device)
                 x_dict = XDict(input_dict)
-                '''
-                x_dict.keys(): dict_keys(['coord', 'x_seq', 'gene_mask'])
-                
-                x_dict['coord'].shape: torch.Size([295, 2]), [5632.6669,  695.5215]
-                x_dict['x_seq'].shape: torch.Size([295, 407]), 0 399
-                x_dict['gene_mask'].shape: torch.Size([407]), True, False
-                '''
+
                 out_dict, loss = self.model(x_dict, data_dict['gene_list'])
-                '''
-                out_dict.keys(): dict_keys(['mean', 'disp', 'recon', 'latent', 'pred', 'latent_loss', 'target_loss'])
-                '''
+
                 optim.zero_grad()
                 loss.backward()
-                nn.utils.clip_grad_norm_(self.model.parameters(), 2.0) # 裁剪梯度的最大范数值<=2
+                nn.utils.clip_grad_norm_(self.model.parameters(), 2.0) 
                 optim.step()
                 epoch_loss.append(loss.item())
 
@@ -184,11 +171,6 @@ class ImputationPipeline(Pipeline):
 
             if min(valid_loss) == valid_loss[-1]:
                 best_dict = deepcopy(self.model.state_dict())
-                # final_epoch = epoch
-
-            # if min(valid_loss) != min(valid_loss[-config['es']:]):
-            #     print(f'Early stopped. Best validation performance achieved at epoch {final_epoch}.')
-            #     break
 
         assert best_dict, 'Best state dict was not stored. Please report this issue on Github.'
         self.model.load_state_dict(best_dict)
@@ -254,11 +236,7 @@ class ImputationPipeline(Pipeline):
         if split_field and target_split:
             labels = labels[adata.obs[split_field]==target_split]
             pred = pred[adata.obs[split_field]==target_split]
-        # size_factor = 1e4 / (labels.sum(1, keepdims=True) + torch.from_numpy(adata.X.sum(1)).to(pred.device))
-        # size_factor[size_factor.isinf()] == 0
-        # labels = size_factor * labels
-        # pred = size_factor * pred
-        return imputation_eval(torch.log1p(pred), torch.log1p(labels)) # pred, lable, 
+        return imputation_eval(torch.log1p(pred), torch.log1p(labels))
 
 
 
