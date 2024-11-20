@@ -15,7 +15,6 @@ import warnings
 from . import Pipeline, load_pretrain
 from sklearn.metrics.cluster import adjusted_rand_score, normalized_mutual_info_score
 import scipy.sparse
-import pdb
 
 def mmd_loss(x, y, sigma=0.1):
     n = x.size(0)
@@ -28,7 +27,6 @@ def mmd_loss(x, y, sigma=0.1):
             (2 / (n * m)) * torch.sum(xy)
     # pdb.set_trace()
     return loss
-
 
 ImputationDefaultModelConfig = {
     'objective': 'imputation',
