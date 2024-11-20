@@ -90,9 +90,3 @@ if __name__ == '__main__':
 
 # conda activate cellplm     
 # CUDA_VISIBLE_DEVICES='0' python spatial_imputation.py
-
-
-'''
-/data/casp16/lq_projects/CellPLM-main/CellPLM/embedder/omics.py
-/data/casp16/lq_projects/CellPLM-main/CellPLM/model/cellformer.py
-'''
