@@ -25,11 +25,11 @@ def stratified_sample_genes_by_sparsity(data, boundaries=None, seed=10):
 
 def datasets_82(dataset_num=2, part=0): 
 
-    sc_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
-    st_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_8_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    sc_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_8_part_{}.h5ad".format(dataset_num, dataset_num, shared_genes[dataset_num-1],part))
+    st_ori_8 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_8_part_{}.h5ad".format(dataset_num, dataset_num, shared_genes[dataset_num-1],part))
     
-    sc_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
-    st_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_2_part_{}.h5ad".format(dataset_num, shared_genes[dataset_num-1],part))
+    sc_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_seq_{}_2_part_{}.h5ad".format(dataset_num, dataset_num, shared_genes[dataset_num-1],part))
+    st_ori_2 = sc.read_h5ad("src/mouse_data/dataset{}/dataset{}_spatial_{}_2_part_{}.h5ad".format(dataset_num, dataset_num, shared_genes[dataset_num-1],part))
     
     return st_ori_8, sc_ori_8, st_ori_2, sc_ori_2
 
