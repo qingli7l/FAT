@@ -1,10 +1,12 @@
 import os
 import torch
 import anndata as ad
-from ..model import OmicsFormer
+# from ..model import OmicsFormer
+from src.CellPLM.model import OmicsFormer
 from abc import ABC, abstractmethod
 from typing import List, Union
-from .experimental import symbol_to_ensembl
+# from .experimental import symbol_to_ensembl
+from src.CellPLM.pipeline.experimental import symbol_to_ensembl
 import json
 import warnings
 import scanpy as sc
