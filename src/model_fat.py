@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 from sklearn.preprocessing import normalize
 from torch.nn.functional import softmax
-from dimensionality_reduction import process_dim_reduction
 
 
 class DicLayer(nn.Module):
