@@ -18,7 +18,7 @@ FAT provides some tasks related to spatial imputation and projection.
 
 2. Spatial imputation can run `spatial_imputation.py` for human datasets [Liver](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf) and [Lung](https://info.vizgen.com/ffpe-showcase?submissionGuid=88ba0a44-26e2-47a2-8ee4-9118b9811fbf). If you want to experiment with other data, you can choose other pre-trained foundation models on the data to replace CellPLM adopted in FAT. The environment installation of spatial imputation is consistent with the environment of the selected foundation model.
 
-3. Batch effect demo train on [human brain cell dataset Zhuang](https://alleninstitute.github.io/abc_atlas_access/descriptions/Zhuang-ABCA-1.html) with `spatial_batch_effect.py`.
+3. Batch effect demo trains on [human brain cell dataset Zhuang](https://alleninstitute.github.io/abc_atlas_access/descriptions/Zhuang-ABCA-1.html) with `spatial_batch_effect.py`.
 
 # Acknowledgement
 The code is partially adapted from [CellPLM](https://github.com/OmicsML/CellPLM).
