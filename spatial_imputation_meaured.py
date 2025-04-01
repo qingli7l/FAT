@@ -89,4 +89,4 @@ if __name__ == '__main__':
     
 
 # conda activate cellplm     
-# CUDA_VISIBLE_DEVICES='0' python spatial_imputation.py
+# CUDA_VISIBLE_DEVICES='0' python spatial_imputation_meaured.py
