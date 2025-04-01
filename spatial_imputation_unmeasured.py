@@ -166,4 +166,4 @@ if __name__ == '__main__':
             draw_data(Gene_set[i], sc_ori, st_ori, All_Imp_Genes, args)
         
 # conda activate fat      
-# CUDA_VISIBLE_DEVICES='0' python spatial_projection.py
+# CUDA_VISIBLE_DEVICES='0' python spatial_imputation_unmeaured.py
